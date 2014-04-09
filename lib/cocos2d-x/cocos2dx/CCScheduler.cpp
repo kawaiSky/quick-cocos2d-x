@@ -805,6 +805,7 @@ void CCScheduler::update(float dt)
             pEntry->target->update(dt);
         }
     }
+    
 
     // updates with priority > 0
     DL_FOREACH_SAFE(m_pUpdatesPosList, pEntry, pTmp)

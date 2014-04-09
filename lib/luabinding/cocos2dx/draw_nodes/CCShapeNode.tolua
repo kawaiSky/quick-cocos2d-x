@@ -39,7 +39,6 @@ class CCShapeNode : public CCNode
 class CCCircleShape : public CCShapeNode
 {
     static CCCircleShape* create(float radius);
-    static CCCircleShape* create(float radius, bool fill);
 
     float getRadius(void);
     void setRadius(float radius);
@@ -49,8 +48,6 @@ class CCCircleShape : public CCShapeNode
     void setSegments(unsigned int segments);
     bool isDrawLineToCenter(void);
     void setDrawLineToCenter(bool drawLineToCenter);
-    bool isFill(void);
-    void setFill(bool fill);
 };
 
 class CCRectShape : public CCShapeNode

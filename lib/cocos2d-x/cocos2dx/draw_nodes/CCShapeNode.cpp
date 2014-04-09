@@ -44,16 +44,9 @@ CCCircleShape* CCCircleShape::create(float radius)
     return circle;
 }
 
-CCCircleShape* CCCircleShape::create(float radius, bool fill)
-{
-	CCCircleShape* circle = CCCircleShape::create(radius);
-	circle->setFill(fill);
-	return circle;
-}
-
 void CCCircleShape::drawProc(void)
 {
-    ccDrawCircle(getDrawPosition(), m_radius, m_angle, m_segments, m_drawLineToCenter, m_scaleX, m_scaleY, m_fill);
+    ccDrawCircle(getDrawPosition(), m_radius, m_angle, m_segments, m_drawLineToCenter, m_scaleX, m_scaleY);
 }
 
 

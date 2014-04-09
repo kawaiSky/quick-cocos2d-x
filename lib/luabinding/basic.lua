@@ -261,6 +261,7 @@ local CCObjectTypes = {
     "CCWaves",
     "CCWaves3D",
     "CCWavesTiles3D",
+    "CCSkeletonAnimation",
 }
 
 -- register CCObject types

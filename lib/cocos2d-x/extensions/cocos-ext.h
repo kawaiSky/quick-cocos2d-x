@@ -37,5 +37,8 @@
 #include "GUI/CCScrollView/CCTableView.h"
 #include "GUI/CCEditBox/CCEditBox.h"
 
-#include "GameCenter/GameCenter.h"
+#include "spine/spine.h"
+#include <spine/CCSkeleton.h>
+#include <spine/CCSkeletonAnimation.h>
+
 #endif /* __COCOS2D_EXT_H__ */

@@ -76,6 +76,27 @@ ifndef $(QUICK_MINI_TARGET)
         GUI/CCScrollView/CCSorting.cpp \
         GUI/CCScrollView/CCTableView.cpp \
         GUI/CCScrollView/CCTableViewCell.cpp \
+        spine/Animation.cpp \
+        spine/AnimationState.cpp \
+        spine/AnimationStateData.cpp \
+        spine/Atlas.cpp \
+        spine/AtlasAttachmentLoader.cpp \
+        spine/Attachment.cpp \
+        spine/AttachmentLoader.cpp \
+        spine/Bone.cpp \
+        spine/BoneData.cpp \
+        spine/CCSkeleton.cpp \
+        spine/CCSkeletonAnimation.cpp \
+        spine/extension.cpp \
+        spine/Json.cpp \
+        spine/RegionAttachment.cpp \
+        spine/Skeleton.cpp \
+        spine/SkeletonData.cpp \
+        spine/SkeletonJson.cpp \
+        spine/Skin.cpp \
+        spine/Slot.cpp \
+        spine/SlotData.cpp \
+        spine/spine-cocos2dx.cpp \
         network/WebSocket.cpp
 
 endif
@@ -96,6 +117,7 @@ endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
+                           $(LOCAL_PATH)/spine \
                            $(LOCAL_PATH)/GUI/CCEditBox
 
 

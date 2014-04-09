@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on 04/03/14 12:27:57.
+** Generated automatically by tolua++-1.0.92 on Wed Apr  9 13:58:48 2014.
 */
 
 /****************************************************************************
@@ -445,6 +445,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  toluafix_add_type_mapping(typeid(CCParticleFireworks).hash_code(), "CCParticleFireworks");
  tolua_usertype(tolua_S,"CCEvent");
  toluafix_add_type_mapping(typeid(CCEvent).hash_code(), "CCEvent");
+ tolua_usertype(tolua_S,"CCSkeletonAnimation");
+ toluafix_add_type_mapping(typeid(CCSkeletonAnimation).hash_code(), "CCSkeletonAnimation");
  tolua_usertype(tolua_S,"CCBaseData");
  toluafix_add_type_mapping(typeid(CCBaseData).hash_code(), "CCBaseData");
  tolua_usertype(tolua_S,"CCActionInterval");
@@ -549,6 +551,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  toluafix_add_type_mapping(typeid(CCTransitionSlideInR).hash_code(), "CCTransitionSlideInR");
  tolua_usertype(tolua_S,"CCTransitionMoveInT");
  toluafix_add_type_mapping(typeid(CCTransitionMoveInT).hash_code(), "CCTransitionMoveInT");
+ tolua_usertype(tolua_S,"SkeletonData");
+ toluafix_add_type_mapping(typeid(SkeletonData).hash_code(), "SkeletonData");
  tolua_usertype(tolua_S,"CCLayerGradient");
  toluafix_add_type_mapping(typeid(CCLayerGradient).hash_code(), "CCLayerGradient");
  tolua_usertype(tolua_S,"CCShapeNode");
@@ -597,6 +601,10 @@ static void tolua_reg_types (lua_State* tolua_S)
  toluafix_add_type_mapping(typeid(CCTintTo).hash_code(), "CCTintTo");
  tolua_usertype(tolua_S,"CCTransitionCrossFade");
  toluafix_add_type_mapping(typeid(CCTransitionCrossFade).hash_code(), "CCTransitionCrossFade");
+ tolua_usertype(tolua_S,"Atlas");
+ toluafix_add_type_mapping(typeid(Atlas).hash_code(), "Atlas");
+ tolua_usertype(tolua_S,"CCEaseExponentialOut");
+ toluafix_add_type_mapping(typeid(CCEaseExponentialOut).hash_code(), "CCEaseExponentialOut");
  tolua_usertype(tolua_S,"CCClippingRegionNode");
  toluafix_add_type_mapping(typeid(CCClippingRegionNode).hash_code(), "CCClippingRegionNode");
  tolua_usertype(tolua_S,"CCBone");
@@ -706,8 +714,8 @@ static void tolua_reg_types (lua_State* tolua_S)
  toluafix_add_type_mapping(typeid(CCMenu).hash_code(), "CCMenu");
  tolua_usertype(tolua_S,"ccColor4F");
  toluafix_add_type_mapping(typeid(ccColor4F).hash_code(), "ccColor4F");
- tolua_usertype(tolua_S,"CCEaseExponentialOut");
- toluafix_add_type_mapping(typeid(CCEaseExponentialOut).hash_code(), "CCEaseExponentialOut");
+ tolua_usertype(tolua_S,"CCSkeleton");
+ toluafix_add_type_mapping(typeid(CCSkeleton).hash_code(), "CCSkeleton");
  tolua_usertype(tolua_S,"CCSet");
  toluafix_add_type_mapping(typeid(CCSet).hash_code(), "CCSet");
  tolua_usertype(tolua_S,"CCCallFunc");
@@ -35345,8 +35353,7 @@ static int tolua_Cocos2d_ccDrawCircle00(lua_State* tolua_S)
      !tolua_isboolean(tolua_S,5,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,8,1,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,9,&tolua_err)
+     !tolua_isnoobj(tolua_S,8,&tolua_err)
  )
   goto tolua_lerror;
  else
@@ -35359,9 +35366,8 @@ static int tolua_Cocos2d_ccDrawCircle00(lua_State* tolua_S)
   bool drawLineToCenter = ((bool)  tolua_toboolean(tolua_S,5,0));
   float scaleX = ((float)  tolua_tonumber(tolua_S,6,0));
   float scaleY = ((float)  tolua_tonumber(tolua_S,7,0));
-  bool fill = ((bool)  tolua_toboolean(tolua_S,8,false));
   {
-   ccDrawCircle(center,radius,angle,segments,drawLineToCenter,scaleX,scaleY,fill);
+   ccDrawCircle(center,radius,angle,segments,drawLineToCenter,scaleX,scaleY);
   }
  }
  return 0;
@@ -35384,8 +35390,7 @@ static int tolua_Cocos2d_ccDrawCircle01(lua_State* tolua_S)
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,5,0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,6,1,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,7,&tolua_err)
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
  )
   goto tolua_lerror;
  else
@@ -35395,9 +35400,8 @@ static int tolua_Cocos2d_ccDrawCircle01(lua_State* tolua_S)
   float angle = ((float)  tolua_tonumber(tolua_S,3,0));
   unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
   bool drawLineToCenter = ((bool)  tolua_toboolean(tolua_S,5,0));
-  bool fill = ((bool)  tolua_toboolean(tolua_S,6,false));
   {
-   ccDrawCircle(center,radius,angle,segments,drawLineToCenter,fill);
+   ccDrawCircle(center,radius,angle,segments,drawLineToCenter);
   }
  }
  return 0;
@@ -35936,35 +35940,6 @@ static int tolua_Cocos2d_CCCircleShape_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: create of class  CCCircleShape */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCircleShape_create01
-static int tolua_Cocos2d_CCCircleShape_create01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertable(tolua_S,1,"CCCircleShape",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  float radius = ((float)  tolua_tonumber(tolua_S,2,0));
-  bool fill = ((bool)  tolua_toboolean(tolua_S,3,0));
-  {
-   CCCircleShape* tolua_ret = (CCCircleShape*)  CCCircleShape::create(radius,fill);
-    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
-    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
-    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCCircleShape");
-  }
- }
- return 1;
-tolua_lerror:
- return tolua_Cocos2d_CCCircleShape_create00(tolua_S);
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: getRadius of class  CCCircleShape */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCircleShape_getRadius00
 static int tolua_Cocos2d_CCCircleShape_getRadius00(lua_State* tolua_S)
@@ -36220,71 +36195,6 @@ static int tolua_Cocos2d_CCCircleShape_setDrawLineToCenter00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setDrawLineToCenter'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: isFill of class  CCCircleShape */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCircleShape_isFill00
-static int tolua_Cocos2d_CCCircleShape_isFill00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCCircleShape",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCCircleShape* self = (CCCircleShape*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isFill'", NULL);
-#endif
-  {
-   bool tolua_ret = (bool)  self->isFill();
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'isFill'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setFill of class  CCCircleShape */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCCircleShape_setFill00
-static int tolua_Cocos2d_CCCircleShape_setFill00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCCircleShape",0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCCircleShape* self = (CCCircleShape*)  tolua_tousertype(tolua_S,1,0);
-  bool fill = ((bool)  tolua_toboolean(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFill'", NULL);
-#endif
-  {
-   self->setFill(fill);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setFill'.",&tolua_err);
  return 0;
 #endif
 }
@@ -62585,6 +62495,451 @@ static int tolua_Cocos2d_CCBone_getName00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: createWithData of class  CCSkeleton */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeleton_createWithData00
+static int tolua_Cocos2d_CCSkeleton_createWithData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSkeleton",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"SkeletonData",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  SkeletonData* skeletonData = ((SkeletonData*)  tolua_tousertype(tolua_S,2,0));
+  bool ownsSkeletonData = ((bool)  tolua_toboolean(tolua_S,3,false));
+  {
+   CCSkeleton* tolua_ret = (CCSkeleton*)  CCSkeleton::createWithData(skeletonData,ownsSkeletonData);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCSkeleton");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithFile of class  CCSkeleton */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeleton_createWithFile00
+static int tolua_Cocos2d_CCSkeleton_createWithFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSkeleton",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"Atlas",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* skeletonDataFile = ((const char*)  tolua_tostring(tolua_S,2,0));
+  Atlas* atlas = ((Atlas*)  tolua_tousertype(tolua_S,3,0));
+  float scale = ((float)  tolua_tonumber(tolua_S,4,1));
+  {
+   CCSkeleton* tolua_ret = (CCSkeleton*)  CCSkeleton::createWithFile(skeletonDataFile,atlas,scale);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCSkeleton");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithFile of class  CCSkeleton */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeleton_createWithFile01
+static int tolua_Cocos2d_CCSkeleton_createWithFile01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSkeleton",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* skeletonDataFile = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* atlasFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float scale = ((float)  tolua_tonumber(tolua_S,4,1));
+  {
+   CCSkeleton* tolua_ret = (CCSkeleton*)  CCSkeleton::createWithFile(skeletonDataFile,atlasFile,scale);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCSkeleton");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCSkeleton_createWithFile00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithFile of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_createWithFile00
+static int tolua_Cocos2d_CCSkeletonAnimation_createWithFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"Atlas",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* skeletonDataFile = ((const char*)  tolua_tostring(tolua_S,2,0));
+  Atlas* atlas = ((Atlas*)  tolua_tousertype(tolua_S,3,0));
+  float scale = ((float)  tolua_tonumber(tolua_S,4,1));
+  {
+   CCSkeletonAnimation* tolua_ret = (CCSkeletonAnimation*)  CCSkeletonAnimation::createWithFile(skeletonDataFile,atlas,scale);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSkeletonAnimation");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'createWithFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: createWithFile of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_createWithFile01
+static int tolua_Cocos2d_CCSkeletonAnimation_createWithFile01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  const char* skeletonDataFile = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* atlasFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float scale = ((float)  tolua_tonumber(tolua_S,4,1));
+  {
+   CCSkeletonAnimation* tolua_ret = (CCSkeletonAnimation*)  CCSkeletonAnimation::createWithFile(skeletonDataFile,atlasFile,scale);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCSkeletonAnimation");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_Cocos2d_CCSkeletonAnimation_createWithFile00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setMix of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_setMix00
+static int tolua_Cocos2d_CCSkeletonAnimation_setMix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  const char* fromAnimation = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* toAnimation = ((const char*)  tolua_tostring(tolua_S,3,0));
+  float duration = ((float)  tolua_tonumber(tolua_S,4,0));
+  int stateIndex = ((int)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMix'", NULL);
+#endif
+  {
+   self->setMix(fromAnimation,toAnimation,duration,stateIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setMix'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setAnimation of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_setAnimation00
+static int tolua_Cocos2d_CCSkeletonAnimation_setAnimation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+  bool loop = ((bool)  tolua_toboolean(tolua_S,3,0));
+  int stateIndex = ((int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAnimation'", NULL);
+#endif
+  {
+   self->setAnimation(name,loop,stateIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setAnimation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addAnimation of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_addAnimation00
+static int tolua_Cocos2d_CCSkeletonAnimation_addAnimation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+  bool loop = ((bool)  tolua_toboolean(tolua_S,3,0));
+  float delay = ((float)  tolua_tonumber(tolua_S,4,0));
+  int stateIndex = ((int)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addAnimation'", NULL);
+#endif
+  {
+   self->addAnimation(name,loop,delay,stateIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addAnimation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: clearAnimation of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_clearAnimation00
+static int tolua_Cocos2d_CCSkeletonAnimation_clearAnimation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  int stateIndex = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clearAnimation'", NULL);
+#endif
+  {
+   self->clearAnimation(stateIndex);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'clearAnimation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTimeScale of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00
+static int tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  float scale = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTimeScale'", NULL);
+#endif
+  {
+   self->setTimeScale(scale);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTimeScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setDebugBones of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_setDebugBones00
+static int tolua_Cocos2d_CCSkeletonAnimation_setDebugBones00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  bool debug = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDebugBones'", NULL);
+#endif
+  {
+   self->setDebugBones(debug);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setDebugBones'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSlotColor of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_setSlotColor00
+static int tolua_Cocos2d_CCSkeletonAnimation_setSlotColor00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"ccColor4F",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  char* slotName = ((char*)  tolua_tostring(tolua_S,2,0));
+  ccColor4F* color = ((ccColor4F*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSlotColor'", NULL);
+#endif
+  {
+   self->setSlotColor(slotName,color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSlotColor'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSkin of class  CCSkeletonAnimation */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_CCSkeletonAnimation_setSkin00
+static int tolua_Cocos2d_CCSkeletonAnimation_setSkin00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCSkeletonAnimation",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCSkeletonAnimation* self = (CCSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+  char* skinName = ((char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSkin'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->setSkin(skinName);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSkin'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
 {
@@ -64412,7 +64767,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"CCCircleShape","CCCircleShape","CCShapeNode",NULL);
   tolua_beginmodule(tolua_S,"CCCircleShape");
    tolua_function(tolua_S,"create",tolua_Cocos2d_CCCircleShape_create00);
-   tolua_function(tolua_S,"create",tolua_Cocos2d_CCCircleShape_create01);
    tolua_function(tolua_S,"getRadius",tolua_Cocos2d_CCCircleShape_getRadius00);
    tolua_function(tolua_S,"setRadius",tolua_Cocos2d_CCCircleShape_setRadius00);
    tolua_function(tolua_S,"getAngle",tolua_Cocos2d_CCCircleShape_getAngle00);
@@ -64421,8 +64775,6 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setSegments",tolua_Cocos2d_CCCircleShape_setSegments00);
    tolua_function(tolua_S,"isDrawLineToCenter",tolua_Cocos2d_CCCircleShape_isDrawLineToCenter00);
    tolua_function(tolua_S,"setDrawLineToCenter",tolua_Cocos2d_CCCircleShape_setDrawLineToCenter00);
-   tolua_function(tolua_S,"isFill",tolua_Cocos2d_CCCircleShape_isFill00);
-   tolua_function(tolua_S,"setFill",tolua_Cocos2d_CCCircleShape_setFill00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCRectShape","CCRectShape","CCShapeNode",NULL);
   tolua_beginmodule(tolua_S,"CCRectShape");
@@ -65634,6 +65986,25 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setIgnoreMovementBoneData",tolua_Cocos2d_CCBone_setIgnoreMovementBoneData00);
    tolua_function(tolua_S,"getIgnoreMovementBoneData",tolua_Cocos2d_CCBone_getIgnoreMovementBoneData00);
    tolua_function(tolua_S,"getName",tolua_Cocos2d_CCBone_getName00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCSkeleton","CCSkeleton","CCNode",NULL);
+  tolua_beginmodule(tolua_S,"CCSkeleton");
+   tolua_function(tolua_S,"createWithData",tolua_Cocos2d_CCSkeleton_createWithData00);
+   tolua_function(tolua_S,"createWithFile",tolua_Cocos2d_CCSkeleton_createWithFile00);
+   tolua_function(tolua_S,"createWithFile",tolua_Cocos2d_CCSkeleton_createWithFile01);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"CCSkeletonAnimation","CCSkeletonAnimation","CCSkeleton",NULL);
+  tolua_beginmodule(tolua_S,"CCSkeletonAnimation");
+   tolua_function(tolua_S,"createWithFile",tolua_Cocos2d_CCSkeletonAnimation_createWithFile00);
+   tolua_function(tolua_S,"createWithFile",tolua_Cocos2d_CCSkeletonAnimation_createWithFile01);
+   tolua_function(tolua_S,"setMix",tolua_Cocos2d_CCSkeletonAnimation_setMix00);
+   tolua_function(tolua_S,"setAnimation",tolua_Cocos2d_CCSkeletonAnimation_setAnimation00);
+   tolua_function(tolua_S,"addAnimation",tolua_Cocos2d_CCSkeletonAnimation_addAnimation00);
+   tolua_function(tolua_S,"clearAnimation",tolua_Cocos2d_CCSkeletonAnimation_clearAnimation00);
+   tolua_function(tolua_S,"setTimeScale",tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00);
+   tolua_function(tolua_S,"setDebugBones",tolua_Cocos2d_CCSkeletonAnimation_setDebugBones00);
+   tolua_function(tolua_S,"setSlotColor",tolua_Cocos2d_CCSkeletonAnimation_setSlotColor00);
+   tolua_function(tolua_S,"setSkin",tolua_Cocos2d_CCSkeletonAnimation_setSkin00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;
