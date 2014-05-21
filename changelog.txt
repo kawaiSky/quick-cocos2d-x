@@ -1,0 +1,5 @@
+14.4.14
+[new] 添加 spine,cocostudio extension 文件夹 添加spine的动态换肤功能
+[new] studio 添加防止抖动滑动效果 scrollview touch 和end touch的时候的加速度 
+[new] action with label 数字增长
+[new] spine color和opacity 更改为 displayColor和display opacity

@@ -58,6 +58,11 @@ const GLchar * ccPositionTextureColor_vert =
 const GLchar * ccPositionTextureGray_frag =
 #include "ccShader_PositionTextureGray_frag.h"
 
+const GLchar * ccPositionTextureGray1_frag =
+#include "ccShader_PositionTextureGray1_frag.h"
+
+const GLchar * ccPositionTextureGray1_vert =
+#include "ccShader_PositionTextureGray1_vert.h"
 //
 const GLchar * ccPositionTextureColorAlphaTest_frag = 
 #include "ccShader_PositionTextureColorAlphaTest_frag.h"

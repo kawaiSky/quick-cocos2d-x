@@ -165,6 +165,8 @@ void CCTouchDispatcher::addTargetedDelegate(CCTouchDelegate *pDelegate, int nPri
         if (ccCArrayContainsValue(m_pHandlersToRemove, pDelegate))
         {
             ccCArrayRemoveValue(m_pHandlersToRemove, pDelegate);
+            //sky fix priority
+            this->setPriority(nPriority,pDelegate);
             return;
         }
         

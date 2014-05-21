@@ -146,14 +146,15 @@ void CCSkeletonAnimation::setTimeScale(float scale){
     timeScale = scale;
 };
 void CCSkeletonAnimation::setDebugBones(bool debug){
+    
     debugBones = debug;
 };
-    bool CCSkeletonAnimation::setSkin(const char *name){
+bool CCSkeletonAnimation::setSkin(const char *name){
         bool res = super::setSkin(name);
         if(!res) return false;
         setSlotsToSetupPose();
         return true;
-    };
+};
  void CCSkeletonAnimation::setSlotColor(const char *slotName, ccColor4F* color){
      Slot* slot = findSlot(slotName);
      slot->r = color->r;

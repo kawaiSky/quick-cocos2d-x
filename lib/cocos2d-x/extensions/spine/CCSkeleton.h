@@ -83,7 +83,9 @@ public:
 	CC_PROPERTY(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
 	virtual void setOpacityModifyRGB (bool value);
 	virtual bool isOpacityModifyRGB ();
-
+        
+    
+    CCNode* getNodeForSlot(const char* slotName);
 protected:
 	CCSkeleton ();
 	void setSkeletonData (SkeletonData* skeletonData, bool ownsSkeletonData);
@@ -93,6 +95,14 @@ private:
 	bool ownsSkeletonData;
 	Atlas* atlas;
 	void initialize ();
+    struct sSlotNode
+    {
+        Slot* slot;
+        CCNode* node;
+    };
+        typedef std::map<const char*,sSlotNode> SlotNodeMap;
+        typedef SlotNodeMap::iterator SlotNodeIter;
+        SlotNodeMap m_slotNodes;
 };
 
 }} // namespace cocos2d { namespace extension {

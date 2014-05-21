@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 //
 // singleton stuff
-//
+//   
 typedef struct _hashElement
 {
     struct _ccArray             *actions;

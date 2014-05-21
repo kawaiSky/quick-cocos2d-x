@@ -124,11 +124,11 @@ void CCSkeleton::draw () {
 	CC_NODE_DRAW_SETUP();
 
 	ccGLBlendFunc(blendFunc.src, blendFunc.dst);
-	ccColor3B color = getColor();
+	ccColor3B color = getDisplayedColor();
 	skeleton->r = color.r / (float)255;
 	skeleton->g = color.g / (float)255;
 	skeleton->b = color.b / (float)255;
-	skeleton->a = getOpacity() / (float)255;
+	skeleton->a = getDisplayedOpacity() / (float)255;
 	if (premultipliedAlpha) {
 		skeleton->r *= skeleton->a;
 		skeleton->g *= skeleton->a;
@@ -162,7 +162,23 @@ void CCSkeleton::draw () {
 		textureAtlas->drawQuads();
 		textureAtlas->removeAllQuads();
 	}
-
+    
+    //customer
+    for (SlotNodeIter iter = m_slotNodes.begin(), end=m_slotNodes.end();iter!=end;++iter) {
+        sSlotNode& slot_node = iter->second;
+        Slot* slot = slot_node.slot;
+        CCNode* node = slot_node.node;
+        Bone* bone = slot->bone;
+        if(bone!=nullptr){
+            node->setPosition(ccp(bone->worldX,bone->worldY));
+            node->setRotation(-bone->worldRotation);
+            node->setScaleX(bone->worldScaleX);
+            node->setScaleY(bone->worldScaleY);
+        }
+        node->setOpacity(255*slot->a);
+        node->setColor(ccc3(255*slot->r,255*slot->g,255*slot->b));
+    }
+    //--customerEnd
 	if (debugSlots) {
 		// Slots.
 		ccDrawColor4B(0, 0, 255, 255);
@@ -289,5 +305,27 @@ void CCSkeleton::setOpacityModifyRGB (bool value) {
 bool CCSkeleton::isOpacityModifyRGB () {
 	return premultipliedAlpha;
 }
-
+    CCNode* CCSkeleton::getNodeForSlot(const char *slotName){
+        SlotNodeIter iter = m_slotNodes.find(slotName);
+        if (iter!=m_slotNodes.end()) {
+            sSlotNode& slot_node = iter->second;
+            return slot_node.node;
+        }else{
+            Slot* slot = findSlot(slotName);
+            if(slot!=nullptr){
+                CCNode* node = CCNode::create();
+                node->setPosition(ccp(0,0));
+                node->setCascadeColorEnabled(true);
+                node->setCascadeOpacityEnabled(true);
+                this->addChild(node);
+                sSlotNode slot_node;
+                slot_node.slot =slot;
+                slot_node.node = node;
+                m_slotNodes.insert(SlotNodeMap::value_type(slotName,slot_node));
+                return node;
+            }else{
+                return nullptr;
+            }
+        }
+    };
 }} // namespace cocos2d { namespace extension {

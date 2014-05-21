@@ -765,6 +765,30 @@ protected:
     GLubyte m_fromOpacity;
 };
 
+/** @brief change label to .
+ @warning This action doesn't support "reverse"
+ */
+class CC_DLL LabelTo : public CCActionInterval
+{
+public:
+    /** initializes the action with duration and opacity */
+    bool initWithDuration(float duration, int opacity);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual CCObject* copyWithZone(CCZone* pZone);
+    virtual void startWithTarget(CCNode *pTarget);
+    virtual void update(float time);
+    
+public:
+    /** creates an action with duration and num */
+    static LabelTo* create(float duration, int num);
+protected:
+    int m_toNum;
+    int m_fromNum;
+};
+
 /** @brief Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"
  @since v0.7.2

@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include "cocoa/CCZone.h"
 #include <stdarg.h>
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -1975,6 +1976,80 @@ void CCFadeTo::update(float time)
     m_pTarget->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));
     }
 
+
+//
+// labelto
+//
+
+LabelTo* LabelTo::create(float duration, int opacity)
+{
+    LabelTo *pLabelTo = new LabelTo();
+    pLabelTo->initWithDuration(duration, opacity);
+    pLabelTo->autorelease();
+    
+    return pLabelTo;
+}
+
+bool LabelTo::initWithDuration(float duration, int opacity)
+{
+    if (CCActionInterval::initWithDuration(duration))
+    {
+        m_toNum = opacity;
+        return true;
+    }
+    
+    return false;
+}
+
+CCObject* LabelTo::copyWithZone(CCZone *pZone)
+{
+    CCZone* pNewZone = NULL;
+    LabelTo* pCopy = NULL;
+    if(pZone && pZone->m_pCopyObject)
+    {
+        //in case of being called at sub class
+        pCopy = (LabelTo*)(pZone->m_pCopyObject);
+    }
+    else
+    {
+        pCopy = new LabelTo();
+        pZone = pNewZone = new CCZone(pCopy);
+    }
+    
+    CCActionInterval::copyWithZone(pZone);
+    
+    pCopy->initWithDuration(m_fDuration, m_toNum);
+    
+    CC_SAFE_DELETE(pNewZone);
+    return pCopy;
+}
+
+void LabelTo::startWithTarget(CCNode *pTarget)
+{
+    CCActionInterval::startWithTarget(pTarget);
+    
+    CCLabelProtocol *pRGBAProtocol = dynamic_cast<CCLabelProtocol*>(pTarget);
+    if (pRGBAProtocol)
+    {
+        m_fromNum = atoi(pRGBAProtocol->getString());
+    }
+    /*m_fromOpacity = pTarget->getOpacity();*/
+}
+
+void LabelTo::update(float time)
+{
+    CCLabelProtocol *pRGBAProtocol = dynamic_cast<CCLabelProtocol*>(m_pTarget);
+    if (pRGBAProtocol)
+    {
+        int current =m_fromNum + (m_toNum - m_fromNum) * time;
+        std::string str;
+        std::stringstream _str;
+        _str<<current;
+        _str>>str;
+        pRGBAProtocol->setString(str.c_str());
+    }
+    /*m_pTarget->setOpacity((GLubyte)(m_fromOpacity + (m_toOpacity - m_fromOpacity) * time));*/
+}
 //
 // TintTo
 //

@@ -130,7 +130,7 @@ public:
     virtual int executeEventWithArgs(int nHandler, CCArray* pArgs);
 
     virtual bool handleAssert(const char *msg);
-    
+    virtual bool parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str);
 private:
     CCLuaEngine(void)
     : m_stack(NULL)

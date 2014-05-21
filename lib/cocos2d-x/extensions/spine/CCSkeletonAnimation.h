@@ -60,7 +60,6 @@ public:
     //customer
     void setTimeScale(float scale);
     void setDebugBones(bool debug);
-    //改变slot的颜色
     void setSlotColor(const char* slotName,ccColor4F* color);
 protected:
 	CCSkeletonAnimation ();

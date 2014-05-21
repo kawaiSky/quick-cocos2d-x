@@ -27,15 +27,37 @@
 precision mediump float;                    \n\
 #endif                                      \n\
 \n\
-uniform sampler2D u_texture;                \n\
+uniform sampler2D CC_Texture0 ;                \n\
 varying vec2 v_texCoord;                    \n\
 varying vec4 v_fragmentColor;               \n\
 \n\
 void main(void)                             \n\
 {                                           \n\
 // Convert to greyscale using NTSC weightings               \n\
-vec4 col = texture2D(u_texture, v_texCoord);                \n\
-float grey = dot(col.rgb, vec3(0.299, 0.587, 0.114));       \n\
-gl_FragColor = vec4(grey, grey, grey, col.a);               \n\
-}                                           \n\
+//vec4 col = texture2D(u_texture, v_texCoord);                \n\
+//float grey = dot(col.rgb, vec3(0.299, 0.587, 0.114));       \n\
+////float grey = getColor(col.r,col.g,col.b,col.a);       \n\
+//gl_FragColor = vec4(grey, grey, grey, col.a);               \n\
+float radius = 0.001;\n\
+ vec3 u_outlineColor = vec3(0.0,0.0,1.0);\n\
+    vec4 accum = vec4(0.0);\n\
+    vec4 normal = vec4(0.0);\n\
+\n\
+    normal = texture2D(CC_Texture0, vec2(v_texCoord.x, v_texCoord.y));\n\
+\n\
+    accum += texture2D(CC_Texture0, vec2(v_texCoord.x - radius, v_texCoord.y - radius));\n\
+    accum += texture2D(CC_Texture0, vec2(v_texCoord.x + radius, v_texCoord.y - radius));\n\
+    accum += texture2D(CC_Texture0, vec2(v_texCoord.x + radius, v_texCoord.y + radius));\n\
+    accum += texture2D(CC_Texture0, vec2(v_texCoord.x - radius, v_texCoord.y + radius));\n\
+\n\
+    accum *= 1.7;\n\
+\n\
+   accum.r = u_outlineColor.x;\n\
+   accum.g = u_outlineColor.y;\n\
+    accum.b = u_outlineColor.z;\n\
+\n\
+    normal = (accum * (1.0 - normal.a)) + (normal * normal.a);\n\
+\n\
+    gl_FragColor = v_fragmentColor * normal;\n\
+}\n\
 ";

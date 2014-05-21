@@ -665,7 +665,7 @@ void CCTexture2D::drawAtPoint(const CCPoint& point)
 
 void CCTexture2D::drawInRect(const CCRect& rect)
 {
-    GLfloat    coordinates[] = {    
+    GLfloat    coordinates[] = {
         0.0f,    m_fMaxT,
         m_fMaxS,m_fMaxT,
         0.0f,    0.0f,

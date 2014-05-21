@@ -9,6 +9,8 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaEngine.cpp \
     ../cocos2dx_support/CCLuaStack.cpp \
     ../cocos2dx_support/CCLuaValue.cpp \
     ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
+    ../cocos2dx_support/LuaCocoStudio.cpp \
+    ../cocos2dx_support/lua_cocos2dx_cocostudio_manual.cpp \
     ../cocos2dx_support/tolua_fix.c \
     ../cocos2dx_support/snapshot.c \
     ../cocos2dx_support/platform/android/CCLuaJavaBridge.cpp \

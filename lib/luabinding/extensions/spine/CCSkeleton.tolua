@@ -46,7 +46,7 @@ public:
 	static CCSkeleton* createWithData (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	static CCSkeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
-
+	CCNode* getNodeForSlot(char* slotName);
 	//CCSkeleton (SkeletonData* skeletonData, bool ownsSkeletonData = false);
 	//CCSkeleton (const char* skeletonDataFile, Atlas* atlas, float scale = 1);
 	//CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
@@ -55,7 +55,7 @@ public:
 
 	//virtual void update (float deltaTime);
 	//virtual void draw ();
-	//virtual cocos2d::CCRect boundingBox ();
+	CCRect boundingBox ();
 
 	// --- Convenience methods for common Skeleton_* functions.
 	//void updateWorldTransform ();
@@ -81,7 +81,7 @@ public:
 
 	// --- CCBlendProtocol
 	//CC_PROPERTY(cocos2d::ccBlendFunc, blendFunc, BlendFunc);
-	//virtual void setOpacityModifyRGB (bool value);
+	void setOpacityModifyRGB (bool value);
 	//virtual bool isOpacityModifyRGB ();
 
 };
